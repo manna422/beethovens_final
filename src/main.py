@@ -1,16 +1,22 @@
 import pygame
 from time import sleep
+from beethoven import Beethoven
 
 class Game(object):
-    def __init__(self):
+    FRAMES_PER_SECOND = 60
+    clock = pygame.time.Clock()
+    def __init__(self, width, height, fullscreen):
         self.running = True
 
         pygame.init()
         pygame.display.set_caption('Beethoven\'s Final')
         
-        self.width = 800
-        self.height = 800
-        self.screen = pygame.display.set_mode((self.width, self.height))
+        self.width = width
+        self.height = height
+        if (fullscreen):
+            self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
+        else:
+            self.screen = pygame.display.set_mode((self.width, self.height))
 
         self.colors = {}
         self.colors['GREEN'] = (0, 255, 0)
@@ -27,8 +33,9 @@ class Game(object):
         pygame.display.flip()
 
     def run(self):
-        print self.running
         while self.running:
+            self.clock.tick(self.FRAMES_PER_SECOND)
+            # input handling
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
@@ -52,10 +59,9 @@ class Game(object):
         pygame.display.flip()
 
 
-
 def main():
-     game = Game()
-     game.run()
+    game = Game(800, 800, False)
+    game.run()
 
 if __name__ == '__main__':
     main()
