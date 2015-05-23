@@ -1,4 +1,5 @@
 import pygame
+from time import sleep
 
 class Game(object):
     def __init__(self):
@@ -17,6 +18,12 @@ class Game(object):
         self.colors['GREY'] = (127, 127, 127)
 
         self.screen.fill(self.colors['GREEN'])
+
+        self.beethovenRect = pygame.Rect(390, 390, 20, 20);
+        pygame.draw.rect(self.screen, self.colors['GREY'], self.beethovenRect);
+        
+        self.keyDelay = 0.03;
+
         pygame.display.flip()
 
     def run(self):
@@ -27,6 +34,23 @@ class Game(object):
                     self.running = False
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.running = False
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+                    self.drawAttack(-20, 0);
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+                    self.drawAttack(20, 0);
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+                    self.drawAttack(0, -20);
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+                    self.drawAttack(0, 20);
+
+    def drawAttack(self, x, y):
+        leftRect = self.beethovenRect.move(x, y);
+        pygame.draw.rect(self.screen, self.colors['RED'], leftRect);
+        pygame.display.flip();
+        sleep(self.keyDelay);
+        pygame.draw.rect(self.screen, self.colors['GREEN'], leftRect);
+        pygame.display.flip();
+
 
 
 def main():
