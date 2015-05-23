@@ -1,6 +1,8 @@
 import pygame
 from time import sleep
 from beethoven import Beethoven
+import math
+from pleb import Pleb
 
 class Game(object):
     FRAMES_PER_SECOND = 60
@@ -34,6 +36,7 @@ class Game(object):
 
     def run(self):
         while self.running:
+            # clock
             self.clock.tick(self.FRAMES_PER_SECOND)
             # input handling
             for event in pygame.event.get():
@@ -58,9 +61,13 @@ class Game(object):
         pygame.draw.rect(self.screen, self.colors['GREEN'], leftRect)
         pygame.display.flip()
 
-
 def main():
-    game = Game(800, 800, False)
+
+    WIDTH = 800
+    HEIGHT = 800
+    FULLSCREEN = False
+
+    game = Game(WIDTH, HEIGHT, FULLSCREEN)
     game.run()
 
 if __name__ == '__main__':
