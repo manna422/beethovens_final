@@ -126,7 +126,13 @@ class Game(object):
         self.pleb_group.add(pleb)
 
     def restart(self):
-        pygame.mixer.music.stop()
+        self.screen.blit(self.background,  self.backgroundRect)
+        self.beethoven.attackDirection(bto.Direction.Dead)
+        score_texture = self.font.render(str(self.score), 1, self.colors['FONT'])
+        self.screen.blit(score_texture, (20, 20))
+        pygame.display.flip()
+        pygame.mixer.music.fadeout(5000)
+        pygame.time.delay(5000)
         pygame.mixer.music.rewind() 
         self.startTime = pygame.time.get_ticks()
         self.pleb_index = 0
@@ -134,6 +140,8 @@ class Game(object):
         self.alive = True
         for sprite in self.pleb_group:
             sprite.kill()
+        self.beethoven.attackDirection(bto.Direction.Rest)
+        pygame.display.flip()
         pygame.mixer.music.play()
 
 def main():

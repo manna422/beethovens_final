@@ -6,13 +6,14 @@ class Direction:
     Down = 1
     Right = 4
     Left = 3
+    Dead = 5
 
 class Beethoven(pygame.sprite.GroupSingle):
     def __init__(self, game):
         pygame.sprite.GroupSingle.__init__(self)
         self.game = game
         self.rest = True
-        self.beethovenSprites = [BeethovenSprite(self, dir) for dir in range(5)]
+        self.beethovenSprites = [BeethovenSprite(self, dir) for dir in range(6)]
         self.attackDirection(Direction.Rest)
 
     def attackDirection(self, direction):
@@ -60,4 +61,6 @@ class BeethovenSprite(pygame.sprite.Sprite):
         elif direction == Direction.Right:
             self.rect.move_ip(lungeDist, 0)
             self.image = pygame.transform.scale(pygame.image.load("../resources/BeethovenSide.png"), (self.charSize, self.charSize))
+        elif direction == Direction.Dead:
+            self.image = pygame.transform.scale(pygame.image.load("../resources/BeethovenDead.png"), (self.charSize, self.charSize))
         
