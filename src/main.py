@@ -204,7 +204,7 @@ def main():
                 elif (pick2 == 2):
                     game = Game(WIDTH, HEIGHT, FULLSCREEN, overture)
                     game.run()
-                elif (pick3 == 3):
+                elif (pick2 == 3):
                     game = Game(WIDTH, HEIGHT, FULLSCREEN, moonlight)
                     game.run()
             elif (pick == 2):
