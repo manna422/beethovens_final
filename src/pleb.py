@@ -6,6 +6,8 @@ class PlebSprite(pygame.sprite.Sprite):
         self.game = game
         self.VELOCITY = 3
         self.image = image
+        self.rect = self.image.get_rect() #messed up
+        self.direction = direction
         if direction == 0:
             self.xdirection = 0
             self.ydirection = -1
@@ -28,8 +30,7 @@ class PlebSprite(pygame.sprite.Sprite):
         x, y = self.position
         x += self.VELOCITY * self.xdirection
         y += self.VELOCITY * self.ydirection
-        self.position = (x, y)
-        self.rect = self.image.get_rect() #messed up
+        self.position = (x, y) 
         self.rect.center = self.position
 
         # collision detection
