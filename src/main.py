@@ -1,6 +1,6 @@
 import pygame
 from time import sleep
-from beethoven import Beethoven
+import beethoven as bto
 import math
 from pleb import Pleb
 
@@ -15,10 +15,12 @@ class Game(object):
         
         self.width = width
         self.height = height
+        self.charSize = 120
         if (fullscreen):
             self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
         else:
             self.screen = pygame.display.set_mode((self.width, self.height))
+            # self.screen = pygame.display.set_mode((self.width, self.height))
 
         self.colors = {}
         self.colors['GREEN'] = (0, 255, 0)
@@ -27,44 +29,40 @@ class Game(object):
 
         self.screen.fill(self.colors['GREEN'])
 
-        self.beethovenRect = pygame.Rect(390, 390, 20, 20)
-        pygame.draw.rect(self.screen, self.colors['GREY'], self.beethovenRect)
-
         self.keyDelay = 0.03
+
+        self.beethoven = bto.Beethoven(self)
 
         pygame.display.flip()
 
+        print "init done"
+
     def run(self):
         while self.running:
+            self.screen.fill(self.colors['GREEN'])
             # clock
             self.clock.tick(self.FRAMES_PER_SECOND)
             # input handling
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.running = False
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
-                    self.drawAttack(-20, 0)
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
-                    self.drawAttack(20, 0)
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
-                    self.drawAttack(0, -20)
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
-                    self.drawAttack(0, 20)
-
-    def drawAttack(self, x, y):
-        leftRect = self.beethovenRect.move(x, y)
-        pygame.draw.rect(self.screen, self.colors['RED'], leftRect)
-        pygame.display.flip()
-        sleep(self.keyDelay)
-        pygame.draw.rect(self.screen, self.colors['GREEN'], leftRect)
-        pygame.display.flip()
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+                    self.beethoven.attackDirection(bto.Direction.Left)
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+                    self.beethoven.attackDirection(bto.Direction.Right)
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+                    self.beethoven.attackDirection(bto.Direction.Up)
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+                    self.beethoven.attackDirection(bto.Direction.Down)
+                else:
+                    self.beethoven.attackDirection(bto.Direction.Rest)
 
 def main():
 
-    WIDTH = 800
-    HEIGHT = 800
+    WIDTH = 640
+    HEIGHT = 640
     FULLSCREEN = False
 
     game = Game(WIDTH, HEIGHT, FULLSCREEN)

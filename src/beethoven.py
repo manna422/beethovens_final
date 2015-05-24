@@ -1,38 +1,52 @@
 import pygame
-from enum import Enum
 
-class DirectionEnum(Enum):
+class Direction:
 	Rest = 0
 	Up = 1
 	Down = 2
 	Left = 3
 	Right = 4
 
-
 class Beethoven(pygame.sprite.GroupSingle):
 	def __init__(self, game):
+		pygame.sprite.GroupSingle.__init__(self)
 		self.game = game
-		self.sprites = [BeethovenSprite(self, dir) for dir in DirectionEnum]
-		self.attackDirection(DirectionEnum.Rest)
 
-	def attackDirection(direction):
-		self.add(self.sprites[direction])
+		self.beethovenSprites = [BeethovenSprite(self, dir) for dir in range(5)]
+		self.attackDirection(Direction.Rest)
+
+	def attackDirection(self, direction):
+		print "beethoven attack"
+		print direction
+		beethovenSprite = self.beethovenSprites[direction]
+		self.add(beethovenSprite)
 		self.update()
-		self.draw(game.screen)
+		self.draw(self.game.screen)
+		pygame.display.flip()
 		# TODO: kill the pleb in this direction
 
 class BeethovenSprite(pygame.sprite.Sprite):
     def __init__(self, beethoven, direction):
+    	pygame.sprite.Sprite.__init__(self)
         self.beethoven = beethoven
         self.direction = direction
-        self.rect = (300, 300, 20, 20);
+        self.charSize = beethoven.game.charSize
+        lungeDist = 10
 
-        if direction == DirectionEnum.Up:
-        	self.image = ""
-        elif direction == DirectionEnum.Down:
-        	self.image = ""
-        elif direction == DirectionEnum.Left:
-        	self.image = ""
-        elif direction == DirectionEnum.Right:
-        	self.image = ""
+        self.rect = pygame.Rect((beethoven.game.width - self.charSize)/2, (beethoven.game.height- self.charSize)/2, self.charSize, self.charSize);
+        
+        if direction == Direction.Rest:
+        	self.image = pygame.transform.scale(pygame.image.load("../resources/BeethovenRest.png"), (self.charSize, self.charSize))
+        elif direction == Direction.Up:
+        	self.rect.move_ip(0, -lungeDist)
+        	self.image = pygame.transform.scale(pygame.image.load("../resources/BeethovenBack.png"), (self.charSize, self.charSize))
+        elif direction == Direction.Down:
+        	self.rect.move_ip(0, lungeDist)
+        	self.image = pygame.transform.scale(pygame.image.load("../resources/BeethovenFront.png"), (self.charSize, self.charSize))
+        elif direction == Direction.Left:
+        	self.rect.move_ip(-lungeDist, 0)
+        	self.image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("../resources/BeethovenSide.png"), (self.charSize, self.charSize)), True, False)
+        elif direction == Direction.Right:
+        	self.rect.move_ip(lungeDist, 0)
+        	self.image = pygame.transform.scale(pygame.image.load("../resources/BeethovenSide.png"), (self.charSize, self.charSize))
 
