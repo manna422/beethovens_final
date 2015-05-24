@@ -31,6 +31,8 @@ class MediaPlayer(QWidget):
                 self.set_mark_c()
             elif key == Qt.Key_D:
                 self.set_mark_d()
+            elif key == Qt.Key_Escape:
+                self.clear_marks()
             return True
         return QWidget.eventFilter(self, widget, event)
 
@@ -59,6 +61,9 @@ class MediaPlayer(QWidget):
         self.seeker.move(0, 100)
         self.seeker.sliderReleased.connect(self.seeker_update)
         self.seeker.setEnabled(False)
+
+    def clear_marks(self):
+        self.mdata = []
 
     def play_pause(self):
         if self.playing:
@@ -133,6 +138,7 @@ class MediaPlayer(QWidget):
         self.playing = True
 
     def store_mdata(self):
+        print self.mdata
         f = open((self.filename + '.mdata'), 'w')
         for inst in self.mdata:
             f.write('%s %s\n' % inst)
