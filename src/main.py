@@ -11,7 +11,7 @@ class Game(object):
 
         pygame.init()
         pygame.mixer.init()
-        pygame.display.set_caption('Beethoven\'s Final')
+        pygame.display.set_caption('Beethoven\'s Beats')
         
         self.width = width
         self.height = height
@@ -157,7 +157,7 @@ def main():
 
     WIDTH = 800
     HEIGHT = 800
-    FULLSCREEN = False
+    FULLSCREEN = True
     ode = '../resources/song.ogg'
     overture = '../resources/song1.ogg'
     moonlight = '../resources/song2.ogg'
@@ -182,7 +182,7 @@ def main():
     pygame.mixer.music.play()
 
     pick = menu.run()
-    
+
     while 1:
         if (pick == 1):
             menu = Menu()
