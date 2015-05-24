@@ -169,26 +169,42 @@ def main():
         screen = pygame.display.set_mode((WIDTH, HEIGHT))
     screen.fill((51,51,51))
 
+
+
+
+    menu = Menu()
+    menu.init(['Start', 'Quit'], screen)
+    menu.draw(0)
+    pygame.display.update()
+
+    pygame.mixer.init()
+    pygame.mixer.music.load('../resources/tuning_warmup.mp3')
+    pygame.mixer.music.set_volume(2)
+    pygame.mixer.music.play()
+
+    pick = menu.run()
+    
     while 1:
-        menu = Menu()
-        menu.init(['Start', 'Quit'], screen)
-        menu.draw(0)
-        pygame.display.update()
-        pick = menu.run()
         if (pick == 1):
             menu = Menu()
-            menu.init(['Ode To Joy','The Creatures of Prometheus','Quit'], screen)
+            menu.init(['Start', 'Quit'], screen)
             menu.draw(0)
             pygame.display.update()
-            pick2 = menu.run()
-            if (pick2 == 1):
-                game = Game(WIDTH, HEIGHT, FULLSCREEN, ode)
-                game.run()
-            elif (pick2 == 2):
-                game = Game(WIDTH, HEIGHT, FULLSCREEN, overture)
-                game.run()
-        elif (pick == 2):
-            break
+            pick = menu.run()
+            if (pick == 1):
+                menu = Menu()
+                menu.init(['Ode To Joy','The Creatures of Prometheus','Quit'], screen)
+                menu.draw(0)
+                pygame.display.update()
+                pick2 = menu.run()
+                if (pick2 == 1):
+                    game = Game(WIDTH, HEIGHT, FULLSCREEN, ode)
+                    game.run()
+                elif (pick2 == 2):
+                    game = Game(WIDTH, HEIGHT, FULLSCREEN, overture)
+                    game.run()
+            elif (pick == 2):
+                break
 
 
 
