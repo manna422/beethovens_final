@@ -1,6 +1,25 @@
 import pygame
 
 class PlebSprite(pygame.sprite.Sprite):
+    VELOCITY = 5
+    def __init__(self, image, position, xdirection, ydirection):
+        pygame.sprite.Sprite.__init__(self)
+        self.scr_image = pygame.image.load(image)
+        self.position = position
+        self.xdirection = xdirection
+        self.ydirection = ydirection
+
+    def update(self, deltat):
+        # SIMULATION
+        x, y = self.position
+        x += self.VELOCITY * self.xdirection
+        y += self.VELOCITY * self.ydirection
+        self.position = (x, y)
+        self.rect = self.image.get_rect()
+        self.rect.center = self.position
+
+
+class PlebSprite(pygame.sprite.Sprite):
     def __init__(self, game, image, direction_string):
         self.game = game
         self.VELOCITY = 5
