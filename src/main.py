@@ -159,7 +159,7 @@ def main():
 
     WIDTH = 800
     HEIGHT = 800
-    FULLSCREEN = False
+    FULLSCREEN = True
     ode = '../resources/song.ogg'
     overture = '../resources/song1.ogg'
     moonlight = '../resources/song2.ogg'
