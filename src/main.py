@@ -187,6 +187,8 @@ def main():
             elif (pick2 == 2):
                 game = Game(WIDTH, HEIGHT, FULLSCREEN, overture)
                 game.run()
+        elif (pick == 2):
+            break
 
 
 
