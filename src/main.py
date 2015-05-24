@@ -1,6 +1,6 @@
 import pygame
 import math
-from pleb import Pleb
+from pleb import PlebSprite
 
 class Game(object):
     FRAMES_PER_SECOND = 60
@@ -23,12 +23,23 @@ class Game(object):
         self.colors['RED'] = (255, 0, 0)
         self.colors['GREY'] = (127, 127, 127)
 
+        self.pleb_group = pygame.sprite.Group()
+
+        pleb = PlebSprite(self, "../resources/orange_square.png", "DOWN")
+        self.pleb_group.add(pleb)
+        pleb = PlebSprite(self, "../resources/orange_square.png", "UP")
+        self.pleb_group.add(pleb)
+        pleb = PlebSprite(self, "../resources/orange_square.png", "LEFT")
+        self.pleb_group.add(pleb)
+        pleb = PlebSprite(self, "../resources/orange_square.png", "RIGHT")
+        self.pleb_group.add(pleb)
         self.screen.fill(self.colors['GREEN'])
 
     def run(self):
         while self.running:
+            self.screen.fill(self.colors['GREEN'])
             # clock
-            self.clock.tick(self.FRAMES_PER_SECOND)
+            deltat = self.clock.tick(self.FRAMES_PER_SECOND)
             # input handling
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -36,10 +47,11 @@ class Game(object):
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.running = False
 
-
             # Rendering
-            self.screen.fill(self.colors['GREEN'])
+            self.pleb_group.update(deltat)
+            self.pleb_group.draw(self.screen)
             pygame.display.flip()
+            
 
 def main():
 
