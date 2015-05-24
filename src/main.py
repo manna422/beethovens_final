@@ -162,6 +162,7 @@ def main():
     FULLSCREEN = False
     ode = '../resources/song.ogg'
     overture = '../resources/song1.ogg'
+    moonlight = '../resources/song2.ogg'
 
     if (FULLSCREEN):
         screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
@@ -193,7 +194,7 @@ def main():
             pick = menu.run()
             if (pick == 1):
                 menu = Menu()
-                menu.init(['Ode To Joy','The Creatures of Prometheus','Quit'], screen)
+                menu.init(['Ode To Joy','The Creatures of Prometheus','Moonlight Sonata mov 3','Quit'], screen)
                 menu.draw(0)
                 pygame.display.update()
                 pick2 = menu.run()
@@ -202,6 +203,9 @@ def main():
                     game.run()
                 elif (pick2 == 2):
                     game = Game(WIDTH, HEIGHT, FULLSCREEN, overture)
+                    game.run()
+                elif (pick3 == 3):
+                    game = Game(WIDTH, HEIGHT, FULLSCREEN, moonlight)
                     game.run()
             elif (pick == 2):
                 break

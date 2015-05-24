@@ -105,6 +105,8 @@ class Menu:
                             return 1
                         elif self.get_position() == 1:
                             return 2
+                        elif self.get_position() == 2:
+                            return 3
                         else: # self.get_position() == 1:#here is the Menu class function
                             pygame.display.quit()
                             sys.exit()                        
