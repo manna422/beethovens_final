@@ -122,9 +122,9 @@ class Game(object):
             score_texture = self.font.render(str(self.score), 1, self.colors['FONT'])
             self.screen.blit(score_texture, (20, 20))
             score_texture = self.font.render(str(self.highscore), 1, self.colors['FONT'])
-            self.screen.blit(score_texture, (700, 20))
+            self.screen.blit(score_texture, (600, 20))
             score_texture = self.highscoreFont.render("highscore",1,self.colors['FONT'])
-            self.screen.blit(score_texture, (630, 65))
+            self.screen.blit(score_texture, (600, 100))
             pygame.display.flip()
 
             
