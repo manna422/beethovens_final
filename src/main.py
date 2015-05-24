@@ -126,6 +126,7 @@ class Game(object):
             score_texture = self.highscoreFont.render("highscore",1,self.colors['FONT'])
             self.screen.blit(score_texture, (630, 65))
             pygame.display.flip()
+
             
     def spawnPleb(self, direction):
         pleb = PlebSprite(self, self.plebImages[direction], direction)
@@ -168,24 +169,25 @@ def main():
         screen = pygame.display.set_mode((WIDTH, HEIGHT))
     screen.fill((51,51,51))
 
-
-    menu = Menu()
-    menu.init(['Start', 'Quit'], screen)
-    menu.draw(0)
-    pygame.display.update()
-    pick = menu.run()
-    if (pick == 1):
+    while 1:
         menu = Menu()
-        menu.init(['Ode To Joy','The Creatures of Prometheus','Quit'], screen)
+        menu.init(['Start', 'Quit'], screen)
         menu.draw(0)
         pygame.display.update()
-        pick2 = menu.run()
-        if (pick2 == 1):
-            game = Game(WIDTH, HEIGHT, FULLSCREEN, ode)
-            game.run()
-        elif (pick2 == 2):
-            game = Game(WIDTH, HEIGHT, FULLSCREEN, overture)
-            game.run()
+        pick = menu.run()
+        if (pick == 1):
+            menu = Menu()
+            menu.init(['Ode To Joy','The Creatures of Prometheus','Quit'], screen)
+            menu.draw(0)
+            pygame.display.update()
+            pick2 = menu.run()
+            if (pick2 == 1):
+                game = Game(WIDTH, HEIGHT, FULLSCREEN, ode)
+                game.run()
+            elif (pick2 == 2):
+                game = Game(WIDTH, HEIGHT, FULLSCREEN, overture)
+                game.run()
+
 
 
 if __name__ == '__main__':
