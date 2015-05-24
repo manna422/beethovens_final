@@ -60,8 +60,8 @@ class Game(object):
                 self.pleb_list.append((line[-2], line[:-3]))
 
     def run(self):
-        # self.level_track.play()
-        # pygame.mixer.music.play() #wes uncomment
+        #self.level_track.play()
+        #pygame.mixer.music.play() 
         while self.running:
             self.screen.fill(self.colors['GREEN'])
             # clock
