@@ -13,7 +13,7 @@ class Game(object):
 
         pygame.init()
         pygame.mixer.init()
-        pygame.display.set_caption('Beethoven\'s Final')
+        pygame.display.set_caption('Beethoven\'s Beats')
         
         self.width = width
         self.height = height
@@ -184,7 +184,7 @@ def main():
     pygame.mixer.music.play()
 
     pick = menu.run()
-    
+
     while 1:
         if (pick == 1):
             menu = Menu()
