@@ -16,8 +16,6 @@ class Beethoven(pygame.sprite.GroupSingle):
         self.attackDirection(Direction.Rest)
 
     def attackDirection(self, direction):
-        print "beethoven attack"
-        print direction
         if direction == 0:
             self.rest = True
         else:
@@ -28,6 +26,7 @@ class Beethoven(pygame.sprite.GroupSingle):
         if (sprite):
             if sprite.direction == (direction - 1):
                 #sprite.kill()
+                self.game.score += 1
                 sprite.flyAway()
         self.update()
         # TODO: kill the pleb in this direction

@@ -22,10 +22,14 @@ class Game(object):
         else:
             self.screen = pygame.display.set_mode((self.width, self.height))
 
+        self.font = pygame.font.Font(None, 100)
+        self.score = 0
+
         self.colors = {}
         self.colors['GREEN'] = (0, 255, 0)
         self.colors['RED'] = (255, 0, 0)
         self.colors['GREY'] = (127, 127, 127)
+        self.colors['FONT'] = (64, 127, 64)
         self.pleb_index = 0
         self.background = pygame.image.load("../resources/Background.png")
         self.backgroundRect  = self.background.get_rect()
@@ -51,8 +55,6 @@ class Game(object):
 
         #pygame.display.flip()
 
-        print "init done"
-
     def load_level(self, filename):
         pygame.mixer.music.load(filename)
         pygame.mixer.music.set_volume(1)
@@ -61,7 +63,6 @@ class Game(object):
             lines = f.readlines()
             for line in lines:
                 self.pleb_list.append((line[-2], int(line[:-3])))
-            print self.pleb_list
 
     def run(self):
         pygame.mixer.music.play() 
@@ -109,13 +110,15 @@ class Game(object):
                 pass
 
             if self.alive == False:
-                print "ded"
                 self.restart()
 
             # Rendering
             self.pleb_group.update(deltat)
             self.pleb_group.draw(self.screen)
             self.beethoven.update()
+
+            score_texture = self.font.render(str(self.score), 1, self.colors['FONT'])
+            self.screen.blit(score_texture, (20, 20))
             pygame.display.flip()
             
     def spawnPleb(self, direction):
@@ -123,12 +126,15 @@ class Game(object):
         self.pleb_group.add(pleb)
 
     def restart(self):
+        pygame.mixer.music.stop()
         pygame.mixer.music.rewind() 
         self.startTime = pygame.time.get_ticks()
         self.pleb_index = 0
+        self.score = 0
         self.alive = True
         for sprite in self.pleb_group:
             sprite.kill()
+        pygame.mixer.music.play()
 
 def main():
 
