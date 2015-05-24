@@ -18,9 +18,12 @@ class PlebSprite(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = self.position
 
-class Pleb(object):
-    def __init__(self, game, direction_string):
+
+class PlebSprite(pygame.sprite.Sprite):
+    def __init__(self, game, image, direction_string):
         self.game = game
+        self.VELOCITY = 5
+        self.image = image
         if direction_string == "UP":
             self.xdirection = 0
             self.ydirection = -1
@@ -37,3 +40,24 @@ class Pleb(object):
             self.xdirection = -1
             self.ydirection = 0
             self.position = (self.game.width, self.game.height/2)
+
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(self.image).convert_alpha() #messed up
+
+    def update(self, deltat):
+        # SIMULATION
+        x, y = self.position
+        x += self.VELOCITY * self.xdirection
+        y += self.VELOCITY * self.ydirection
+        self.position = (x, y)
+        self.rect = self.image.get_rect() #messed up
+        self.rect.center = self.position
+
+        # collision detection
+        if self.xdirection and abs(self.position[0] - self.game.width/2) <= 50:
+            self.kill()
+            self.game.alive = False
+        elif self.ydirection and abs(self.position[1] - self.game.height/2) <= 50:
+            self.kill()
+            self.game.alive = False
+

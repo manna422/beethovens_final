@@ -2,7 +2,7 @@ import pygame
 from time import sleep
 import beethoven as bto
 import math
-from pleb import Pleb
+from pleb import PlebSprite
 
 class Game(object):
     FRAMES_PER_SECOND = 60
@@ -11,6 +11,7 @@ class Game(object):
         self.running = True
 
         pygame.init()
+        pygame.mixer.init()
         pygame.display.set_caption('Beethoven\'s Final')
         
         self.width = width
@@ -28,6 +29,23 @@ class Game(object):
         self.colors['GREY'] = (127, 127, 127)
 
         self.screen.fill(self.colors['GREEN'])
+        self.pleb_list = []
+        self.load_level('../resources/song.mp3')
+        self.alive = True # Beethoven
+        self.pleb_group = pygame.sprite.Group()
+        self.screen.fill(self.colors['GREEN'])
+        self.spawnPleb("UP")
+
+
+    def load_level(self, filename):
+        pygame.mixer.music.load(filename)
+        pygame.mixer.music.set_volume(1)
+        mdata_file = filename + '.mdata'
+        with open(mdata_file) as f:
+            lines = f.readlines()
+            for line in lines:
+                self.pleb_list.append((line[-2], line[:-3]))
+
 
         self.keyDelay = 0.03
 
@@ -38,10 +56,12 @@ class Game(object):
         print "init done"
 
     def run(self):
+        # self.level_track.play()
+        pygame.mixer.music.play()
         while self.running:
             self.screen.fill(self.colors['GREEN'])
             # clock
-            self.clock.tick(self.FRAMES_PER_SECOND)
+            deltat = self.clock.tick(self.FRAMES_PER_SECOND)
             # input handling
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -58,6 +78,15 @@ class Game(object):
                     self.beethoven.attackDirection(bto.Direction.Down)
                 else:
                     self.beethoven.attackDirection(bto.Direction.Rest)
+
+            # Rendering
+            self.pleb_group.update(deltat)
+            self.pleb_group.draw(self.screen)
+            pygame.display.flip()
+            
+    def spawnPleb(self, direction_string):
+        pleb = PlebSprite(self, "../resources/orange_square.png", direction_string)
+        self.pleb_group.add(pleb)
 
 def main():
 
