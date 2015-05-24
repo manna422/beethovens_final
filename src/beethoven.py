@@ -2,10 +2,10 @@ import pygame
 
 class Direction:
     Rest = 0
-    Up = 1
-    Down = 2
-    Left = 3
+    Up = 2
+    Down = 1
     Right = 4
+    Left = 3
 
 class Beethoven(pygame.sprite.GroupSingle):
     def __init__(self, game):
@@ -24,6 +24,10 @@ class Beethoven(pygame.sprite.GroupSingle):
             self.rest = False
         beethovenSprite = self.beethovenSprites[direction]
         self.add(beethovenSprite)
+        sprite = pygame.sprite.spritecollideany(self.beethovenSprites[0], self.game.pleb_group)
+        if (sprite):
+            if sprite.direction == (direction - 1):
+                sprite.kill()
         self.update()
         # TODO: kill the pleb in this direction
 
@@ -56,3 +60,4 @@ class BeethovenSprite(pygame.sprite.Sprite):
         elif direction == Direction.Right:
             self.rect.move_ip(lungeDist, 0)
             self.image = pygame.transform.scale(pygame.image.load("../resources/BeethovenSide.png"), (self.charSize, self.charSize))
+        
