@@ -9,6 +9,7 @@ class Game(object):
         self.running = True
 
         pygame.init()
+        pygame.mixer.init()
         pygame.display.set_caption('Beethoven\'s Final')
         
         self.width = width
@@ -23,13 +24,28 @@ class Game(object):
         self.colors['RED'] = (255, 0, 0)
         self.colors['GREY'] = (127, 127, 127)
 
+        self.screen.fill(self.colors['GREEN'])
+        self.pleb_list = []
+        self.load_level('../resources/song.mp3')
         self.alive = True # Beethoven
-
         self.pleb_group = pygame.sprite.Group()
-
         self.screen.fill(self.colors['GREEN'])
         self.spawnPleb("UP")
+
+
+    def load_level(self, filename):
+        pygame.mixer.music.load(filename)
+        pygame.mixer.music.set_volume(1)
+        mdata_file = filename + '.mdata'
+        with open(mdata_file) as f:
+            lines = f.readlines()
+            for line in lines:
+                self.pleb_list.append((line[-2], line[:-3]))
+
+
     def run(self):
+        # self.level_track.play()
+        pygame.mixer.music.play()
         while self.running:
             self.screen.fill(self.colors['GREEN'])
             # clock
