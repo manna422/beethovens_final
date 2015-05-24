@@ -23,8 +23,9 @@ class Game(object):
             self.screen = pygame.display.set_mode((self.width, self.height))
 
         self.font = pygame.font.Font(None, 100)
+        self.highscoreFont = pygame.font.SysFont("monospace", 30)
         self.score = 0
-
+        self.highscore = 0
         self.colors = {}
         self.colors['GREEN'] = (0, 255, 0)
         self.colors['RED'] = (255, 0, 0)
@@ -119,6 +120,10 @@ class Game(object):
 
             score_texture = self.font.render(str(self.score), 1, self.colors['FONT'])
             self.screen.blit(score_texture, (20, 20))
+            score_texture = self.font.render(str(self.highscore), 1, self.colors['FONT'])
+            self.screen.blit(score_texture, (700, 20))
+            score_texture = self.highscoreFont.render("highscore",1,self.colors['FONT'])
+            self.screen.blit(score_texture, (630, 65))
             pygame.display.flip()
             
     def spawnPleb(self, direction):
@@ -127,8 +132,12 @@ class Game(object):
 
     def restart(self):
         self.screen.blit(self.background,  self.backgroundRect)
+        if self.score > self.highscore:
+            self.highscore = self.score
+            score_texture = self.font.render("new highscore!",1,self.colors['FONT'])
+            self.screen.blit(score_texture, (150, 450))
         self.beethoven.attackDirection(bto.Direction.Dead)
-        score_texture = self.font.render(str(self.score), 1, self.colors['FONT'])
+        score_texture = self.font.render(str(self.score), 1, self.colors['RED'])
         self.screen.blit(score_texture, (20, 20))
         pygame.display.flip()
         pygame.mixer.music.fadeout(5000)
