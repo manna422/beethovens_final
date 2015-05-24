@@ -1,7 +1,5 @@
 import pygame
-from time import sleep
 import beethoven as bto
-import math
 from pleb import PlebSprite
 from menu import Menu #credit from http://czajnikmorderca.pl
 

@@ -1,5 +1,6 @@
 import pygame
 import random
+
 class PlebSprite(pygame.sprite.Sprite):
     def __init__(self, game, image, direction):
         pygame.sprite.Sprite.__init__(self)

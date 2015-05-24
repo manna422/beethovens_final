@@ -1,5 +1,6 @@
 import pygame
 import sys
+
 class Menu:
     lista = []
     pola = []
