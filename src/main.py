@@ -41,7 +41,7 @@ class Game(object):
             pygame.transform.flip(pygame.transform.scale(pygame.image.load("../resources/PlebSide.png"), (self.charSize, self.charSize)), True, False), 
             pygame.transform.scale(pygame.image.load("../resources/PlebSide.png"), (self.charSize, self.charSize)), 
         ]
-        self.spawnPleb(0)
+        #self.spawnPleb(0)
         #self.spawnPleb(1)
         #self.spawnPleb(2)
         #self.spawnPleb(3)
@@ -94,7 +94,7 @@ class Game(object):
 
             elapsedTime = pygame.time.get_ticks() - self.startTime
             try:
-                if elapsedTime >= (self.pleb_list[self.pleb_index][1] - 1000*self.width/(2*3)/60):
+                if elapsedTime >= (self.pleb_list[self.pleb_index][1] - 950*self.width/(2*3)/60):
                     item = self.pleb_list[self.pleb_index]
                     self.pleb_index = self.pleb_index + 1
                     if item[0] == 'a':
