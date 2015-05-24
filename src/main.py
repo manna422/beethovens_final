@@ -31,12 +31,12 @@ class Game(object):
         self.colors['GREY'] = (127, 127, 127)
         self.colors['FONT'] = (64, 127, 64)
         self.pleb_index = 0
-        self.background = pygame.image.load("../resources/Background.png")
+        self.background = pygame.image.load("../resources/NewBackground.png")
         self.backgroundRect  = self.background.get_rect()
         self.screen.blit(self.background, self.backgroundRect)
         #self.screen.fill(self.colors['GREEN'])
         self.pleb_list = []
-        self.load_level('../resources/song.mp3')
+        self.load_level('../resources/song.ogg')
         self.alive = True # Beethoven
         self.pleb_group = pygame.sprite.Group()
         self.plebImages = [
