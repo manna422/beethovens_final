@@ -23,18 +23,12 @@ class Game(object):
         self.colors['RED'] = (255, 0, 0)
         self.colors['GREY'] = (127, 127, 127)
 
+        self.alive = True # Beethoven
+
         self.pleb_group = pygame.sprite.Group()
 
-        pleb = PlebSprite(self, "../resources/orange_square.png", "DOWN")
-        self.pleb_group.add(pleb)
-        pleb = PlebSprite(self, "../resources/orange_square.png", "UP")
-        self.pleb_group.add(pleb)
-        pleb = PlebSprite(self, "../resources/orange_square.png", "LEFT")
-        self.pleb_group.add(pleb)
-        pleb = PlebSprite(self, "../resources/orange_square.png", "RIGHT")
-        self.pleb_group.add(pleb)
         self.screen.fill(self.colors['GREEN'])
-
+        self.spawnPleb("UP")
     def run(self):
         while self.running:
             self.screen.fill(self.colors['GREEN'])
@@ -52,6 +46,9 @@ class Game(object):
             self.pleb_group.draw(self.screen)
             pygame.display.flip()
             
+    def spawnPleb(self, direction_string):
+        pleb = PlebSprite(self, "../resources/orange_square.png", direction_string)
+        self.pleb_group.add(pleb)
 
 def main():
 

@@ -37,5 +37,8 @@ class PlebSprite(pygame.sprite.Sprite):
         # collision detection
         if self.xdirection and abs(self.position[0] - self.game.width/2) <= 50:
             self.kill()
+            self.game.alive = False
         elif self.ydirection and abs(self.position[1] - self.game.height/2) <= 50:
             self.kill()
+            self.game.alive = False
+
