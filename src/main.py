@@ -173,6 +173,12 @@ def main():
     menu.init(['Start', 'Quit'], screen)
     menu.draw(0)
     pygame.display.update()
+
+    pygame.mixer.init()
+    pygame.mixer.music.load('../resources/tuning_warmup.mp3')
+    pygame.mixer.music.set_volume(2)
+    pygame.mixer.music.play()
+
     pick = menu.run()
     if (pick == 1):
         menu = Menu()
