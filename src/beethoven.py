@@ -27,7 +27,8 @@ class Beethoven(pygame.sprite.GroupSingle):
         sprite = pygame.sprite.spritecollideany(self.beethovenSprites[0], self.game.pleb_group)
         if (sprite):
             if sprite.direction == (direction - 1):
-                sprite.kill()
+                #sprite.kill()
+                sprite.flyAway()
         self.update()
         # TODO: kill the pleb in this direction
 
