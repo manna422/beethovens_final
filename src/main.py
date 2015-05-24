@@ -79,16 +79,16 @@ class Game(object):
                     self.running = False
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
                     self.beethoven.attackDirection(bto.Direction.Left)
-                    #self.spawnPleb(3)
+                    # self.spawnPleb(3)
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
                     self.beethoven.attackDirection(bto.Direction.Right)
-                    #self.spawnPleb(2)
+                    # self.spawnPleb(2)
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
                     self.beethoven.attackDirection(bto.Direction.Up)
-                    #self.spawnPleb(0)
+                    # self.spawnPleb(0)
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
                     self.beethoven.attackDirection(bto.Direction.Down)
-                    #self.spawnPleb(1)
+                    # self.spawnPleb(1)
                 elif self.beethoven.rest == False: # to fix flicker issue
                     self.beethoven.attackDirection(bto.Direction.Rest)
 
@@ -134,7 +134,7 @@ def main():
 
     WIDTH = 800
     HEIGHT = 800
-    FULLSCREEN = True
+    FULLSCREEN = False
 
     game = Game(WIDTH, HEIGHT, FULLSCREEN)
     game.run()
