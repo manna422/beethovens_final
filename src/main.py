@@ -3,11 +3,12 @@ from time import sleep
 import beethoven as bto
 import math
 from pleb import PlebSprite
+from menu import Menu #credit from http://czajnikmorderca.pl
 
 class Game(object):
     FRAMES_PER_SECOND = 60
     clock = pygame.time.Clock()
-    def __init__(self, width, height, fullscreen):
+    def __init__(self, width, height, fullscreen, song):
         self.running = True
 
         pygame.init()
@@ -37,7 +38,7 @@ class Game(object):
         self.screen.blit(self.background, self.backgroundRect)
         #self.screen.fill(self.colors['GREEN'])
         self.pleb_list = []
-        self.load_level('../resources/song.ogg')
+        self.load_level(song)
         self.alive = True # Beethoven
         self.pleb_group = pygame.sprite.Group()
         self.plebImages = [
@@ -134,14 +135,14 @@ class Game(object):
         self.screen.blit(self.background,  self.backgroundRect)
         if self.score > self.highscore:
             self.highscore = self.score
-            score_texture = self.font.render("new highscore!",1,self.colors['FONT'])
+            score_texture = self.font.render("new highscore!",1,self.colors['RED'])
             self.screen.blit(score_texture, (150, 450))
         self.beethoven.attackDirection(bto.Direction.Dead)
         score_texture = self.font.render(str(self.score), 1, self.colors['RED'])
         self.screen.blit(score_texture, (20, 20))
         pygame.display.flip()
-        pygame.mixer.music.fadeout(5000)
-        pygame.time.delay(5000)
+        pygame.mixer.music.fadeout(3000)
+        pygame.time.delay(3000)
         pygame.mixer.music.rewind() 
         self.startTime = pygame.time.get_ticks()
         self.pleb_index = 0
@@ -158,9 +159,34 @@ def main():
     WIDTH = 800
     HEIGHT = 800
     FULLSCREEN = False
+    ode = '../resources/song.ogg'
+    overture = '../resources/song1.ogg'
 
-    game = Game(WIDTH, HEIGHT, FULLSCREEN)
-    game.run()
+    if (FULLSCREEN):
+        screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+    else:
+        screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    screen.fill((51,51,51))
+
+
+    menu = Menu()
+    menu.init(['Start', 'Quit'], screen)
+    menu.draw(0)
+    pygame.display.update()
+    pick = menu.run()
+    if (pick == 1):
+        menu = Menu()
+        menu.init(['Ode To Joy','The Creatures of Prometheus','Quit'], screen)
+        menu.draw(0)
+        pygame.display.update()
+        pick2 = menu.run()
+        if (pick2 == 1):
+            game = Game(WIDTH, HEIGHT, FULLSCREEN, ode)
+            game.run()
+        elif (pick2 == 2):
+            game = Game(WIDTH, HEIGHT, FULLSCREEN, overture)
+            game.run()
+
 
 if __name__ == '__main__':
     main()
