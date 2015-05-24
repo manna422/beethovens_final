@@ -21,7 +21,6 @@ class Game(object):
             self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
         else:
             self.screen = pygame.display.set_mode((self.width, self.height))
-            # self.screen = pygame.display.set_mode((self.width, self.height))
 
         self.colors = {}
         self.colors['GREEN'] = (0, 255, 0)
@@ -30,12 +29,26 @@ class Game(object):
 
         self.screen.fill(self.colors['GREEN'])
         self.pleb_list = []
-        self.load_level('../resources/song.mp3')
+        #self.load_level('../resources/song.mp3')
         self.alive = True # Beethoven
         self.pleb_group = pygame.sprite.Group()
-        self.screen.fill(self.colors['GREEN'])
-        self.spawnPleb("UP")
+        self.plebImages = [
+            pygame.transform.scale(pygame.image.load("../resources/PlebBack.png"), (self.charSize, self.charSize)), 
+            pygame.transform.scale(pygame.image.load("../resources/PlebFront.png"), (self.charSize, self.charSize)), 
+            pygame.transform.flip(pygame.transform.scale(pygame.image.load("../resources/PlebSide.png"), (self.charSize, self.charSize)), True, False), 
+            pygame.transform.scale(pygame.image.load("../resources/PlebSide.png"), (self.charSize, self.charSize)), 
+        ]
+        self.spawnPleb(0)
+        self.spawnPleb(1)
+        self.spawnPleb(2)
+        self.spawnPleb(3)
+        self.keyDelay = 0.03
 
+        self.beethoven = bto.Beethoven(self)
+
+        #pygame.display.flip()
+
+        print "init done"
 
     def load_level(self, filename):
         pygame.mixer.music.load(filename)
@@ -46,18 +59,9 @@ class Game(object):
             for line in lines:
                 self.pleb_list.append((line[-2], line[:-3]))
 
-
-        self.keyDelay = 0.03
-
-        self.beethoven = bto.Beethoven(self)
-
-        pygame.display.flip()
-
-        print "init done"
-
     def run(self):
         # self.level_track.play()
-        pygame.mixer.music.play()
+        # pygame.mixer.music.play() #wes uncomment
         while self.running:
             self.screen.fill(self.colors['GREEN'])
             # clock
@@ -76,16 +80,17 @@ class Game(object):
                     self.beethoven.attackDirection(bto.Direction.Up)
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
                     self.beethoven.attackDirection(bto.Direction.Down)
-                else:
+                elif self.beethoven.rest == False: # to fix flicker issue
                     self.beethoven.attackDirection(bto.Direction.Rest)
 
             # Rendering
             self.pleb_group.update(deltat)
             self.pleb_group.draw(self.screen)
+            self.beethoven.update()
             pygame.display.flip()
             
-    def spawnPleb(self, direction_string):
-        pleb = PlebSprite(self, "../resources/orange_square.png", direction_string)
+    def spawnPleb(self, direction):
+        pleb = PlebSprite(self, self.plebImages[direction], direction)
         self.pleb_group.add(pleb)
 
 def main():
